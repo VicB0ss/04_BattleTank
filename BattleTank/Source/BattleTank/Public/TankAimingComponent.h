@@ -34,10 +34,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SetUp")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 	UTankBarrel* GetBarrel();
+	virtual void BeginPlay() override;
+	EFiringState GetFiringState() const;
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Firing")
-	EFiringState FiringState = EFiringState::Locked;
+	EFiringState FiringState = EFiringState::Reloading;
+	
 
 private:
 	UTankBarrel* Barrel = nullptr;
@@ -51,5 +54,8 @@ private:
 	// Called to bind functionality to input
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	bool IsBarrelMoving();
+	FVector AimDirection;
 	
 };
