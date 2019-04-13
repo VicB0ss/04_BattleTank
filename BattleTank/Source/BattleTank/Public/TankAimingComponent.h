@@ -37,8 +37,8 @@ public:
 	UTankBarrel* GetBarrel();
 	virtual void BeginPlay() override;
 	EFiringState GetFiringState() const;
-	UFUNCTION(BlueprintCallable, Category = Firing)
-	int GetRoundsLeft() const;
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	int32 GetRoundsLeft() const;
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Firing")
@@ -60,5 +60,5 @@ private:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	bool IsBarrelMoving();
 	FVector AimDirection;
-	int RoundsLeft = 3;
+	int32 RoundsLeft = 3;
 };

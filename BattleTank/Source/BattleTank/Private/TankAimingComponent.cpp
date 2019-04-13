@@ -1,3 +1,4 @@
+#include "../Public/TankAimingComponent.h"
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
@@ -29,7 +30,7 @@ EFiringState UTankAimingComponent::GetFiringState() const
 	return FiringState;
 }
 
-int UTankAimingComponent::GetRoundsLeft() const
+int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return RoundsLeft;
 }
@@ -111,6 +112,11 @@ UTankBarrel * UTankAimingComponent::GetBarrel()
 }
 
 
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) { return false; }
+	return !(Barrel->GetForwardVector().Equals(AimDirection, 0.01));
+}
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
@@ -119,20 +125,12 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	Barrel->Elevate(DeltaRotator.Pitch);
-	if (FMath::Abs(DeltaRotator.Yaw) > 180) 
+	if (FMath::Abs(DeltaRotator.Yaw) > 180)
 	{
 		Turret->Rotate(-DeltaRotator.Yaw);
 	}
-	else 
+	else
 	{
 		Turret->Rotate(DeltaRotator.Yaw);
 	}
-	
-}
-
-
-bool UTankAimingComponent::IsBarrelMoving()
-{
-	if (!ensure(Barrel)) { return false; }
-	return !(Barrel->GetForwardVector().Equals(AimDirection, 0.01));
 }
