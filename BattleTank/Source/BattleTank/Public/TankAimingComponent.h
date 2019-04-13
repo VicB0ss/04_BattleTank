@@ -52,13 +52,15 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float LaunchSpeed = 4000;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	double LastFireTime = 0;
 	float ReloadTimeInSeconds = 3;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	int32 RoundsLeft = 3;
+	double LastFireTime = 0;
 	// Called to bind functionality to input
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	bool IsBarrelMoving();
 	FVector AimDirection;
-	int32 RoundsLeft = 3;
+	
 };
