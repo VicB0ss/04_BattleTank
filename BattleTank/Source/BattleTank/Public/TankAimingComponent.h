@@ -30,7 +30,7 @@ public:
 	UTankAimingComponent();
 	// Called every frame
 	void AimAt(FVector HitLocation);
-	UFUNCTION(BlueprintCallable, Category = Firing)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 	UFUNCTION(BlueprintCallable, Category = "SetUp")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
