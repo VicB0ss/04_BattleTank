@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "Tank.h"
 #include "TankAIController.generated.h"
 
 /**
@@ -14,7 +15,9 @@ class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 
-
+public:
+	UFUNCTION()
+	void OnPossesedTankDeath();
 protected:
 	//How close can the tank get to the player
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
@@ -22,4 +25,5 @@ protected:
 private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
+	virtual void SetPawn(APawn* InPawn) override;
 };
