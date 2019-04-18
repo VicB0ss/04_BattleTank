@@ -10,7 +10,6 @@ void ATankPlayerController::BeginPlay()
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 	FoundAimingComponent(AimingComponent);
-
 }
 
 void ATankPlayerController::Tick(float DeltaSeconds)
@@ -18,6 +17,12 @@ void ATankPlayerController::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 	AimTowardsCrosshair();
 }
+
+void ATankPlayerController::OnTankDeath()
+{
+	StartSpectatingOnly();
+}
+
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
@@ -76,3 +81,13 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection,FVect
 	return false;
 }
 
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PlayerTank = Cast <ATank>(InPawn);
+		if (!ensure(PlayerTank)) { return; }
+		PlayerTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnTankDeath);
+	}
+}

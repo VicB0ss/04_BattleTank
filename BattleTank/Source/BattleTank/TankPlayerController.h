@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Tank.h"
 #include "TankPlayerController.generated.h"
 
 
@@ -20,6 +21,8 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaSeconds) override;
+	UFUNCTION()
+	void OnTankDeath();
 
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
@@ -31,10 +34,13 @@ private:
 	bool GetLookDirection(FVector2D& ScreenLocation, FVector& LookDirection) const;
 	bool GetLookVectorHitLocation(FVector LookDirection,FVector& HitLocation) const;
 
+	void SetPawn(APawn * InPawn);
+
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000.;
 	UPROPERTY(EditDefaultsOnly)
 	float CrossHairLocationX = 0.5;
 	UPROPERTY(EditDefaultsOnly)
 	float CrossHairLocationY = 0.3333;
+
 };
