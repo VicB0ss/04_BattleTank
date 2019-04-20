@@ -21,6 +21,7 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::BeginPlay()
 {
+	Super::BeginPlay();
 	//So that the tanks can't shoot in the beggining.
 	LastFireTime = FPlatformTime::Seconds();
 }
@@ -118,11 +119,11 @@ bool UTankAimingComponent::IsBarrelMoving()
 	return !(Barrel->GetForwardVector().Equals(AimDirection, 0.01));
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::MoveBarrelTowards(FVector TargetAimDirection)
 {
 	if (!ensure(Barrel && Turret)) { return; }
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimAsRotator = AimDirection.Rotation();
+	auto AimAsRotator = TargetAimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 	Barrel->Elevate(DeltaRotator.Pitch);
 	if (FMath::Abs(DeltaRotator.Yaw) > 180)
